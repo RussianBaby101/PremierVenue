@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Saved Venues - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="venues.html">Venues</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="saved-venues.html">Saved Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="my-bookings.html">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.html">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+                <button class="btn btn-outline-light" data-action="logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <div class="page-heading mb-4">
+            <p class="section-eyebrow">Your shortlist</p>
+            <h1>Saved Venues</h1>
+            <p class="text-muted">Keep the spaces you love in one place while you compare options.</p>
+        </div>
+        <div class="row g-4" id="savedVenuesGrid">
+            <div class="col-12 text-center text-muted py-5">Loading saved venues...</div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/client/pages-client-portal-saved-venues.js"></script>
+</body>
+
+</html>
+

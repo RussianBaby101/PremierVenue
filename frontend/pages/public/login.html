@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top public-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">Premier Venue</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="venues.html">Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-page container py-5 mt-5">
+        <section class="card auth-form-card">
+            <div class="card-body">
+                <div class="auth-form-header text-center auth-form-intro">
+                    <p class="section-eyebrow mb-2">Client access</p>
+                    <i class="bi bi-building fs-1 text-primary"></i>
+                    <h1 class="mt-2 h2">Welcome back</h1>
+                    <p>Sign in to keep your booking plans, venue requests, and updates in one place.</p>
+                </div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">Login</button>
+                    <div class="auth-link-row">
+                        <a href="forgot-password.html" class="btn btn-outline-primary">Forgot password</a>
+                        <a href="register.html" class="btn btn-outline-primary">Create account</a>
+                    </div>
+                </form>
+                <div class="auth-support-row">
+                    <div class="auth-support-item">
+                        <i class="bi bi-lock"></i>
+                        <div>
+                            <strong>Need help?</strong>
+                            <span>Use the reset flow if you have forgotten your password.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js"></script>
+    <script src="../../assets/js/shared/sweetAlert-utils.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/public/pages-login.js"></script>
+</body>
+
+</html>

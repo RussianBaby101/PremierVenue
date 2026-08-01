@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Venues - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div id="venuesNavMount"></div>
+
+    <main class="container py-5 mt-5">
+        <h1 class="mb-3">Browse Venues</h1>
+        <p class="text-muted">Portal venue browsing page.</p>
+
+        <section class="featured-venues-panel mb-5" id="featuredVenuesSection">
+            <div class="d-flex justify-content-between align-items-end gap-3 mb-3">
+                <div>
+                    <p class="section-eyebrow mb-1">Hand-picked spaces</p>
+                    <h2 class="mb-0">Featured Venues</h2>
+                </div>
+                <span class="text-muted small">Explore our latest highlights</span>
+            </div>
+            <div class="row g-4" id="featuredVenuesGrid"></div>
+        </section>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <form id="filterForm">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" id="searchTerm" placeholder="Venue name or city">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Min Capacity</label>
+                            <input type="number" class="form-control" id="capacity" placeholder="Guests">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Min Price</label>
+                            <input type="number" class="form-control" id="minPrice" placeholder="R0">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Max Price</label>
+                            <input type="number" class="form-control" id="maxPrice" placeholder="R10000">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Event Type</label>
+                            <select class="form-select" id="eventType">
+                                <option value="">Any event</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end">
+                            <button type="button" class="btn btn-outline-secondary w-100" id="clearFilters">Clear</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="venue-discovery-toolbar d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <p class="text-muted mb-0" id="resultsCount">Loading venues...</p>
+            <div class="d-flex flex-wrap gap-2">
+                <select class="form-select form-select-sm" id="sortBy" aria-label="Sort venues">
+                    <option value="">Sort: Recommended</option>
+                    <option value="price-asc">Price: Low to high</option>
+                    <option value="price-desc">Price: High to low</option>
+                    <option value="capacity">Largest capacity</option>
+                    <option value="newest">Newest</option>
+                </select>
+                <div class="btn-group btn-group-sm" role="group" aria-label="Venue view">
+                    <button type="button" class="btn btn-outline-primary active" id="listViewToggle"><i class="bi bi-grid-3x3-gap"></i> List</button>
+                    <button type="button" class="btn btn-outline-primary" id="mapViewToggle"><i class="bi bi-map"></i> Map</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1" id="venuesGrid"></div>
+        <div id="venueMap" class="venue-map d-none" aria-label="Venue map"></div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <nav aria-label="Venues pagination">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../../assets/js/shared/venues-shared.js?v=4"></script>
+    <script src="../../assets/js/client/pages-client-portal-venues.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="venues.html">Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="saved-venues.html">Saved Venues</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="my-bookings.html">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.html">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+                <button class="btn btn-outline-light" data-action="logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+            <div><h1 class="mb-1">My Bookings</h1><p class="text-muted mb-0">Review quotes, documents, payments, and booking history.</p></div>
+            <div><span class="filter-label">Show</span><div id="bookingFilter" class="filter-pills" role="group" aria-label="Booking filters"><button type="button" class="filter-pill active" data-filter="active">Active</button><button type="button" class="filter-pill" data-filter="Completed">Completed</button><button type="button" class="filter-pill" data-filter="Cancelled">Cancelled</button><button type="button" class="filter-pill" data-filter="Rejected">Rejected</button><button type="button" class="filter-pill" data-filter="QuoteRejected">Quote rejected</button><button type="button" class="filter-pill" data-filter="all">All</button></div></div>
+        </div>
+        <div class="card staff-filter-card mb-4">
+            <div class="card-body">
+                <label class="form-label" for="bookingSearch">Search bookings</label>
+                <input type="search" class="form-control" id="bookingSearch" placeholder="Search venue, event type, reference, status, or date...">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Venue</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Documents & actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="text-muted">No bookings yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js?v=2"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/shared/sweetAlert-utils.js"></script>
+    <script src="../../assets/js/client/pages-client-portal-my-bookings.js?v=2"></script>
+</body>
+
+</html>

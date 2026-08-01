@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Clients - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
+        <div class="container-fluid px-3">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="clients.html">Clients</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage-venues.html">Manage Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="requests.html">Requests</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="users.html">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.html">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+                <button class="btn btn-outline-light" data-action="logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 mt-5">
+        <h1>Clients</h1>
+        <p class="text-muted">View client details and activate or deactivate accounts.</p>
+        <div class="card staff-filter-card mb-4">
+            <div class="card-body">
+                <label class="form-label" for="clientSearch">Search clients</label>
+                <input type="search" class="form-control" id="clientSearch" placeholder="Search by name, email, phone, or status...">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Loading clients...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js?v=3"></script>
+    <script src="../../assets/js/shared/sweetAlert-utils.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/staff/pages-staff-clients.js?v=2"></script>
+</body>
+
+</html>
+

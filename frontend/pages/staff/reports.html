@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
+        <div class="container-fluid px-3">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="clients.html">Clients</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage-venues.html">Manage Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="requests.html">Requests</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reports.html">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="users.html">Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.html">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+                <button class="btn btn-outline-light" data-action="logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container reports-page py-5 mt-5">
+        <div class="reports-heading mb-4">
+            <div>
+                <p class="section-eyebrow mb-2">Performance overview</p>
+                <h1 class="mb-1">Reports</h1>
+                <p class="text-muted mb-0">Track venue performance, revenue, and booking outcomes in one place.</p>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4" id="reportMetrics">
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon blue"><i class="bi bi-cash-stack"></i></div><div><span>Collected revenue</span><strong id="reportRevenue">R0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon green"><i class="bi bi-check2-circle"></i></div><div><span>Completed bookings</span><strong id="reportCompleted">0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon red"><i class="bi bi-x-circle"></i></div><div><span>Cancelled bookings</span><strong id="reportCancelled">0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon purple"><i class="bi bi-bar-chart"></i></div><div><span>Completion rate</span><strong id="reportRate">0%</strong></div></div></div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card report-chart-card h-100">
+                    <div class="card-body">
+                        <div class="report-card-heading"><div><p class="card-eyebrow">Monthly trend</p><h2>Revenue performance</h2></div><span class="report-period"><i class="bi bi-calendar3"></i> Last 6 months</span></div>
+                        <div class="chart-wrap"><canvas id="revenueChart" aria-label="Monthly completed booking revenue"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card report-summary-card h-100">
+                    <div class="card-body"><p class="card-eyebrow">Booking mix</p><h2>Outcome summary</h2><div id="bookingMix" class="booking-mix"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card report-history-card">
+            <div class="card-body">
+                <div class="report-card-heading"><div><p class="card-eyebrow">Closed bookings</p><h2>Completed &amp; cancelled history</h2></div><span id="reportCount" class="text-muted small">Loading...</span></div>
+                <div class="table-responsive"><table class="table report-table mb-0"><thead><tr><th>Reference</th><th>Venue</th><th>Client</th><th>Dates</th><th>Net collected</th><th>Status</th></tr></thead><tbody id="reportBookings"><tr><td colspan="6" class="text-center text-muted py-4">Loading booking history...</td></tr></tbody></table></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/staff/pages-staff-reports.js"></script>
+</body>
+
+</html>

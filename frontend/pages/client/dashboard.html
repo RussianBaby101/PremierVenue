@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Client Portal - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="venues.html">Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="saved-venues.html">Saved Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="my-bookings.html">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendar.html">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+                <button class="btn btn-outline-light" data-action="logout">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container dashboard-page client-dashboard py-5 mt-5">
+        <div class="dashboard-heading mb-4"><div><p class="section-eyebrow mb-2">Your event space</p><h1>Welcome back<span id="userName"></span></h1><p id="userInfo" class="text-muted mb-0">Here is the latest on your venue plans.</p></div><a href="venues.html" class="btn btn-primary"><i class="bi bi-search"></i> Explore Venues</a></div>
+        <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon blue"><i class="bi bi-send"></i></div><div><span>Open requests</span><strong id="clientOpen">0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon green"><i class="bi bi-calendar-check"></i></div><div><span>Confirmed bookings</span><strong id="clientConfirmed">0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon amber"><i class="bi bi-clock"></i></div><div><span>Awaiting response</span><strong id="clientPending">0</strong></div></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="metric-card"><div class="metric-icon purple"><i class="bi bi-collection"></i></div><div><span>Total bookings</span><strong id="clientTotal">0</strong></div></div></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-8"><div class="card dashboard-list-card h-100"><div class="card-body"><div class="dashboard-card-heading"><div><p class="card-eyebrow">Your activity</p><h2>Recent bookings</h2></div><a href="my-bookings.html">View all <i class="bi bi-arrow-right"></i></a></div><div id="clientBookings" class="dashboard-list"><div class="empty-dashboard"><i class="bi bi-calendar2-plus"></i><p>Your booking activity will appear here.</p><a href="venues.html" class="btn btn-outline-primary btn-sm">Find a venue</a></div></div></div></div></div>
+            <div class="col-lg-4"><div class="card next-event-card h-100"><div class="card-body"><p class="card-eyebrow">Looking ahead</p><h2>Next event</h2><div id="nextEvent"><div class="next-event-empty"><i class="bi bi-stars"></i><p>No upcoming event yet.</p><span>Choose a venue to get started.</span></div></div></div></div></div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/client/pages-client-portal-dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+services:
+  premiervenue-api:
+    build:
+      context: ./src
+      dockerfile: ./PremierVenue.API/Dockerfile
+    container_name: premiervenue-api
+    depends_on:
+      premiervenue-db-init:
+        condition: service_completed_successfully
+    ports:
+      - "5080:8080"
+    volumes:
+      - premiervenue-uploads:/app/wwwroot/uploads
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - Smtp__Username=${SMTP_USERNAME:-russian.badass101@gmail.com}
+      - Smtp__Password=${SMTP_PASSWORD:?SMTP_PASSWORD must be set before starting the API}
+      - Smtp__FromEmail=${SMTP_FROM_EMAIL:-russian.badass101@gmail.com}
+    networks:
+      - premiervenue-network
+
+  premiervenue-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: premiervenue-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Password
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Password' -Q 'SELECT 1' -C -b -o /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    ports:
+      - "1433:1433"
+    volumes:
+      - premiervenue-data:/var/opt/mssql
+    networks:
+      - premiervenue-network
+
+  premiervenue-db-init:
+    image: mcr.microsoft.com/mssql-tools:latest
+    container_name: premiervenue-db-init
+    depends_on:
+      premiervenue-db:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: YourStrong@Password
+    volumes:
+      - ./src/PremierVenue.Infrastructure/Data/initial.sql:/schema/initial.sql:ro
+      - ./docker/init-database.sh:/docker/init-database.sh:ro
+    entrypoint: ["/bin/sh", "/docker/init-database.sh"]
+    networks:
+      - premiervenue-network
+
+  premiervenue-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: premiervenue-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - premiervenue-api
+    networks:
+      - premiervenue-network
+
+networks:
+  premiervenue-network:
+    driver: bridge
+
+volumes:
+  premiervenue-data:
+  premiervenue-uploads:

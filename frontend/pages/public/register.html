@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - PremierVenue</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top public-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">Premier Venue</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="venues.html">Venues</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-page container py-5 mt-5">
+        <section class="card auth-form-card">
+            <div class="card-body">
+                <div class="auth-form-header text-center auth-form-intro">
+                    <p class="section-eyebrow mb-2">New client</p>
+                    <h1 class="h2">Create your account</h1>
+                    <p>Register once and you can request venues, track updates, and keep your event details in one
+                        place.</p>
+                </div>
+                <form id="registerForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input class="form-control" type="text" id="firstName" required maxlength="100">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input class="form-control" type="text" id="lastName" required maxlength="100">
+                        </div>
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input class="form-control" type="email" id="email" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input class="form-control" type="tel" id="phoneNumber" required maxlength="20"
+                                placeholder="082 123 4567">
+                        </div>
+                        <div class="col-12">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" id="password" required minlength="8"
+                                autocomplete="new-password" placeholder="Create a secure password">
+                            <div class="mt-2 small" id="passwordRequirements">
+                                <div data-rule="length"><i class="bi bi-x-circle text-danger me-1"></i>At least 8
+                                    characters</div>
+                                <div data-rule="uppercase"><i class="bi bi-x-circle text-danger me-1"></i>One uppercase
+                                    letter</div>
+                                <div data-rule="lowercase"><i class="bi bi-x-circle text-danger me-1"></i>One lowercase
+                                    letter</div>
+                                <div data-rule="digit"><i class="bi bi-x-circle text-danger me-1"></i>One number</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input class="form-control" type="password" id="confirmPassword" required minlength="8"
+                                autocomplete="new-password" placeholder="Re-enter your password">
+                            <div class="small mt-1" id="matchMessage"></div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">Create Account</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="auth-link-row">
+                    <a href="login.html" class="btn btn-outline-primary">Already have an account? Login</a>
+                </div>
+                <div class="auth-support-row">
+                    <div class="auth-support-item">
+                        <i class="bi bi-info-circle"></i>
+                        <div>
+                            <strong>Tip</strong>
+                            <span>Use the same email you want booking updates and reset codes sent to.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/shared/api-config.js"></script>
+    <script src="../../assets/js/shared/api.js?v=3"></script>
+    <script src="../../assets/js/shared/sweetAlert-utils.js"></script>
+    <script src="../../assets/js/shared/main.js"></script>
+    <script src="../../assets/js/public/pages-register.js"></script>
+</body>
+
+</html>
