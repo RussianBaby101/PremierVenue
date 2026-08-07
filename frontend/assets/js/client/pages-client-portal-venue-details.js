@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             let currentYear = currentDate.getFullYear();
             let startDate = null;
             let endDate = null;
+            let isSubmittingRequest = false;
+            let requestSubmitBound = false;
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -293,9 +295,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                     });
                 });
 
-                if (requestForm) {
+                if (requestForm && !requestSubmitBound) {
+                    requestSubmitBound = true;
                     requestForm.addEventListener('submit', async event => {
                         event.preventDefault();
+                        if (isSubmittingRequest) return;
 
                         if (!startDateValueInput || !startDateValueInput.value || !endDateValueInput || !endDateValueInput.value) {
                             if (requestStatus) {
@@ -340,6 +344,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                             additionalServices: additionalServices
                         };
 
+                        const submitButton = requestForm.querySelector('button[type="submit"]');
+                        isSubmittingRequest = true;
+                        submitButton?.setAttribute('disabled', 'disabled');
+                        submitButton?.classList.add('is-submitting');
+
                         try {
                             const result = await BookingApi.create(bookingData);
                             if (requestStatus) {
@@ -356,6 +365,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 requestStatus.textContent = error.message || 'Error submitting request. Please try again.';
                                 requestStatus.className = 'small text-danger mt-3 mb-0';
                             }
+                        } finally {
+                            isSubmittingRequest = false;
+                            submitButton?.removeAttribute('disabled');
+                            submitButton?.classList.remove('is-submitting');
                         }
                     });
                 }
