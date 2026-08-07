@@ -10,6 +10,17 @@ function initPublicPageReveal() {
 
 initPublicPageReveal();
 
+function initNavbarScrollState() {
+    const navbars = document.querySelectorAll('.public-navbar, .app-navbar, #venuesNavMount');
+    if (!navbars.length) return;
+
+    const updateNavbar = () => document.body.classList.toggle('nav-scrolled', window.scrollY > 24);
+    updateNavbar();
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+}
+
+initNavbarScrollState();
+
 // Utility Functions
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -252,7 +263,7 @@ function initHeroParticles() {
     const field = document.getElementById('heroParticles');
     if (!field || typeof anime === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const particleCount = window.innerWidth < 768 ? 34 : 68;
+    const particleCount = window.innerWidth < 768 ? 35 : 60;
     for (let index = 0; index < particleCount; index += 1) {
         const particle = document.createElement('span');
         particle.className = 'hero-particle';
