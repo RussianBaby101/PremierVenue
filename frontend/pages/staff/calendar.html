@@ -78,7 +78,56 @@
         .venue-calendar.staff-calendar .calendar-day .calendar-tooltip {
             z-index: 100;
         }
+
+        /* Keep calendar event details visible on small screens by anchoring
+           tooltips to the nearest safe edge instead of centering them. */
+        .venue-calendar.staff-calendar .calendar-day.col-first .calendar-tooltip {
+            left: 0;
+            transform: translate(0, -4px);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.col-first:hover .calendar-tooltip,
+        .venue-calendar.staff-calendar .calendar-day.col-first:focus .calendar-tooltip {
+            transform: translate(0, 0);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.col-first .calendar-tooltip::before {
+            left: 12px;
+            transform: translateX(0) rotate(45deg);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.col-last .calendar-tooltip {
+            left: auto;
+            right: 0;
+            transform: translate(0, -4px);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.col-last:hover .calendar-tooltip,
+        .venue-calendar.staff-calendar .calendar-day.col-last:focus .calendar-tooltip {
+            transform: translate(0, 0);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.col-last .calendar-tooltip::before {
+            left: auto;
+            right: 12px;
+            transform: translateX(0) rotate(45deg);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.row-last .calendar-tooltip {
+            top: auto;
+            bottom: calc(100% + 10px);
+        }
+
+        .venue-calendar.staff-calendar .calendar-day.row-last .calendar-tooltip::before {
+            top: auto;
+            bottom: -6px;
+            border-left: 0;
+            border-top: 0;
+            border-right: 1px solid #dce8f8;
+            border-bottom: 1px solid #dce8f8;
+        }
     </style>
+    <link rel="icon" type="image/png" href="../../assets/images/PremierVenueFavicon.png">
 </head>
 
 <body>

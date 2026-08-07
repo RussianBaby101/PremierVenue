@@ -10,6 +10,17 @@ function initPublicPageReveal() {
 
 initPublicPageReveal();
 
+function initNavbarScrollState() {
+    const navbars = document.querySelectorAll('.public-navbar, .app-navbar, #venuesNavMount');
+    if (!navbars.length) return;
+
+    const updateNavbar = () => document.body.classList.toggle('nav-scrolled', window.scrollY > 24);
+    updateNavbar();
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+}
+
+initNavbarScrollState();
+
 // Utility Functions
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -252,7 +263,7 @@ function initHeroParticles() {
     const field = document.getElementById('heroParticles');
     if (!field || typeof anime === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const particleCount = window.innerWidth < 768 ? 34 : 68;
+    const particleCount = window.innerWidth < 768 ? 35 : 60;
     for (let index = 0; index < particleCount; index += 1) {
         const particle = document.createElement('span');
         particle.className = 'hero-particle';
@@ -380,12 +391,97 @@ function enforceStaffPageAccess() {
     }
 }
 
+const mobileNavigation = {
+    client: {
+        primary: [
+            { label: 'Home', icon: 'bi-house', href: '/pages/client/dashboard.html', page: 'dashboard.html' },
+            { label: 'Venues', icon: 'bi-building', href: '/pages/client/venues.html', page: 'venues.html' },
+            { label: 'Bookings', icon: 'bi-calendar-check', href: '/pages/client/my-bookings.html', page: 'my-bookings.html' },
+            { label: 'Calendar', icon: 'bi-calendar3', href: '/pages/client/calendar.html', page: 'calendar.html' }
+        ],
+        more: [
+            { label: 'Saved Venues', icon: 'bi-heart', href: '/pages/client/saved-venues.html' },
+            { label: 'Profile', icon: 'bi-person', href: '/pages/client/profile.html' },
+            { label: 'Help & Contact', icon: 'bi-chat-dots', href: '/pages/public/contact-us.html' }
+        ]
+    },
+    staff: {
+        primary: [
+            { label: 'Dashboard', icon: 'bi-speedometer2', href: '/pages/staff/dashboard.html', page: 'dashboard.html' },
+            { label: 'Requests', icon: 'bi-inbox', href: '/pages/staff/requests.html', page: 'requests.html' },
+            { label: 'Venues', icon: 'bi-building', href: '/pages/staff/manage-venues.html', page: 'manage-venues.html', adminOnly: true },
+            { label: 'Calendar', icon: 'bi-calendar3', href: '/pages/staff/calendar.html', page: 'calendar.html', adminOnly: true }
+        ],
+        more: [
+            { label: 'Clients', icon: 'bi-people', href: '/pages/staff/clients.html', adminOnly: true },
+            { label: 'Reports', icon: 'bi-bar-chart', href: '/pages/staff/reports.html', adminOnly: true },
+            { label: 'Users', icon: 'bi-person-badge', href: '/pages/staff/users.html', adminOnly: true },
+            { label: 'Profile', icon: 'bi-person', href: '/pages/staff/profile.html' }
+        ]
+    }
+};
+
+function mobileNavigationItem(item, isMore = false) {
+    const currentPath = window.location.pathname.toLowerCase();
+    const active = item.page && (currentPath.endsWith(item.page) || (item.page === 'venues.html' && currentPath.includes('/pages/client/venue')));
+    return isMore
+        ? `<button type="button" class="mobile-more-item" data-action="open-mobile-more"><i class="bi ${item.icon}"></i><span>${item.label}</span></button>`
+        : `<a class="mobile-nav-item${active ? ' active' : ''}" href="${item.href}"${active ? ' aria-current="page"' : ''}><i class="bi ${item.icon}"></i><span>${item.label}</span></a>`;
+}
+
+function initMobileNavigation() {
+    const path = window.location.pathname.toLowerCase();
+    const isClient = path.includes('/pages/client/');
+    const isStaff = path.includes('/pages/staff/');
+    if ((!isClient && !isStaff) || document.querySelector('.mobile-bottom-nav')) return;
+
+    const user = getCurrentUser();
+    if (!user) return;
+    const role = isStaff ? 'staff' : 'client';
+    const isAdmin = user.role === 'Admin';
+    const config = mobileNavigation[role];
+    const primaryItems = config.primary.filter(item => !item.adminOnly || isAdmin);
+    const moreItems = config.more.filter(item => !item.adminOnly || isAdmin);
+
+    document.body.classList.add('has-mobile-nav');
+    document.body.insertAdjacentHTML('beforeend', `
+        <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+            <div class="mobile-nav-items">
+                ${primaryItems.map(item => mobileNavigationItem(item)).join('')}
+                <button type="button" class="mobile-nav-item" data-action="open-mobile-more"><i class="bi bi-three-dots"></i><span>More</span></button>
+            </div>
+        </nav>
+        <div class="mobile-more-backdrop" data-action="close-mobile-more" aria-hidden="true">
+            <section class="mobile-more-sheet" role="dialog" aria-modal="true" aria-labelledby="mobileMoreTitle">
+                <div class="mobile-more-header"><h2 id="mobileMoreTitle">More</h2><button type="button" class="mobile-more-close" data-action="close-mobile-more" aria-label="Close menu"><i class="bi bi-x-lg"></i></button></div>
+                <div class="mobile-more-grid">${moreItems.map(item => `<a class="mobile-more-item" href="${item.href}"><i class="bi ${item.icon}"></i><span>${item.label}</span></a>`).join('')}</div>
+                <button type="button" class="mobile-more-logout" data-action="logout"><i class="bi bi-box-arrow-right"></i> Log out</button>
+            </section>
+        </div>
+    `);
+}
+
+function openMobileMore() {
+    document.querySelector('.mobile-more-backdrop')?.classList.add('show');
+    document.querySelector('.mobile-more-backdrop')?.setAttribute('aria-hidden', 'false');
+}
+
+function closeMobileMore() {
+    document.querySelector('.mobile-more-backdrop')?.classList.remove('show');
+    document.querySelector('.mobile-more-backdrop')?.setAttribute('aria-hidden', 'true');
+}
+
 // Keep interactions for static and dynamically-rendered markup out of HTML attributes.
 document.addEventListener('click', event => {
     const target = event.target.closest('[data-action]');
     if (!target) return;
     const action = target.dataset.action;
     if (action === 'logout') return logout();
+    if (action === 'open-mobile-more') return openMobileMore();
+    if (action === 'close-mobile-more') {
+        if (target.classList.contains('mobile-more-backdrop') && event.target.closest('.mobile-more-sheet')) return;
+        return closeMobileMore();
+    }
     if (action === 'toggle-saved-venue') return toggleSavedVenue(Number(target.dataset.venueId), target);
     if (action === 'toggle-saved-detail') return toggleSavedVenueFromDetail();
     if (action === 'share-venue') return shareVenue();
@@ -453,6 +549,24 @@ function logout() {
     window.location.href = '/index.html';
 }
 
+function initResponsiveTables() {
+    document.querySelectorAll('.table-responsive table').forEach(table => {
+        const labels = Array.from(table.querySelectorAll('thead th')).map(header => header.textContent.trim());
+        const applyLabels = () => table.querySelectorAll('tbody tr').forEach(row => {
+            Array.from(row.cells).forEach((cell, index) => {
+                if (cell.colSpan > 1) cell.removeAttribute('data-label');
+                else cell.dataset.label = labels[index] || '';
+            });
+        });
+
+        applyLabels();
+        const tbody = table.tBodies[0];
+        if (tbody) new MutationObserver(applyLabels).observe(tbody, { childList: true });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     enforceStaffPageAccess();
+    initMobileNavigation();
+    initResponsiveTables();
 });

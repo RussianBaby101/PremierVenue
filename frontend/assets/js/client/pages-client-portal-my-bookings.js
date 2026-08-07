@@ -77,7 +77,7 @@ let bookings = [];
 
         async function decideQuote(id, accepted) {
             if (!accepted) {
-                const result = await SwalUtils.confirm('Reject this quote?', 'The staff member will be notified that you do not accept this quote.', 'Reject quote');
+                const result = await SwalUtils.confirm('Reject this quote?', 'Are you sure you want to reject this quote?', 'Reject quote');
                 if (!result.isConfirmed) return;
             }
             try { await BookingApi.decideQuote(id, accepted); await loadMyBookings(); } catch (error) { SwalUtils.error('Quote decision failed', error.message); }

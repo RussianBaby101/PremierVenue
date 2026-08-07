@@ -149,6 +149,9 @@ document.addEventListener('DOMContentLoaded', initClientCalendar);
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
+                const totalCells = startingDay + totalDays;
+                const lastRowStart = Math.floor((totalCells - 1) / 7) * 7;
+
                 for (let day = 1; day <= totalDays; day++) {
                     const date = new Date(year, month, day);
                     const normalizedDate = normalizeDate(date);
@@ -156,8 +159,16 @@ document.addEventListener('DOMContentLoaded', initClientCalendar);
                     const dayBookings = getBookingsForDate(date);
                     const hasBookings = dayBookings.length > 0;
 
+                    const cellIndex = startingDay + (day - 1);
+                    const col = cellIndex % 7;
+                    const isFirstCol = col === 0;
+                    const isLastCol = col === 6;
+                    const isLastRow = cellIndex >= lastRowStart;
+
                     const dayClass = hasBookings ? 'has-bookings' : 'no-request';
                     const todayClass = isToday ? 'today' : '';
+                    const colClass = isFirstCol ? 'col-first' : isLastCol ? 'col-last' : '';
+                    const rowClass = isLastRow ? 'row-last' : '';
 
                     const bookingExtras = hasBookings
                         ? renderChips(dayBookings) + `
@@ -168,7 +179,7 @@ document.addEventListener('DOMContentLoaded', initClientCalendar);
                         : '';
 
                     calendarHTML += `
-                        <div class="calendar-day ${dayClass} ${todayClass}">
+                        <div class="calendar-day ${dayClass} ${todayClass} ${colClass} ${rowClass}">
                             ${day}
                             ${bookingExtras}
                         </div>

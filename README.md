@@ -328,6 +328,15 @@ The staff reporting dashboard includes a six-month revenue chart with a month-by
 - PWA manifest and service worker support.
 - Nginx container for frontend serving.
 
+## Mobile functionality
+
+- PWA manifest and service worker for installable, offline-capable access.
+- Standalone app display, portrait orientation, and themed splash colors.
+- Mobile-first responsive layouts built on Bootstrap and custom media queries.
+- Touch-friendly forms, tables, cards, calendars, and booking workflows.
+- Mobile bottom navigation for client and staff portals with quick access to primary pages and a "More" sheet for additional options.
+- Safe-area insets and adaptive UI for notched devices and short viewports.
+
 ## Technology stack
 
 ### Backend
@@ -504,36 +513,34 @@ PremierVenue/
 
 ## Current project status
 
-- [x] Layered ASP.NET Core API structure
-- [x] EF Core and SQL Server persistence
-- [x] JWT authentication and role authorization
-- [x] Client registration, login, password reset, and invitations
-- [x] Client and staff profile persistence
-- [x] Public venue discovery and search
-- [x] Saved venues
-- [x] Venue management and active/inactive status
-- [x] Event-type tickbox management
-- [x] Standard amenity tickbox management
-- [x] Repeatable custom venue amenities
-- [x] Amenity icons on public and client venue pages
-- [x] Multiple venue images and primary image selection
-- [x] Database-backed venue image storage
-- [x] Interactive admin venue map selection
-- [x] Client/public venue browsing maps
-- [x] Address-to-map and map-to-address geocoding
-- [x] Booking request workflow
-- [x] Booking date conflict enforcement
-- [x] Quote creation and client quote decisions
-- [x] Booking PDF upload/download workflow
-- [x] Payment status records
-- [x] Cancellation policies and refund calculation
-- [x] Net collected revenue reporting
-- [x] Docker Compose local environment
-- [x] Initial domain, API controller, and database automated tests
-- [ ] Expand automated API, authorization, and SQL Server integration coverage
-- [ ] Replace current database image storage with production blob storage
-- [ ] Production deployment hardening and monitoring
-
+- Layered ASP.NET Core API structure
+- EF Core and SQL Server persistence
+- JWT authentication and role authorization
+- Client registration, login, password reset, and invitations
+- Client and staff profile persistence
+- Public venue discovery and search
+- Saved venues
+- Venue management and active/inactive status
+- Event-type tickbox management
+- Standard amenity tickbox management
+- Repeatable custom venue amenities
+- Amenity icons on public and client venue pages
+- Multiple venue images and primary image selection
+- Database-backed venue image storage
+- Interactive admin venue map selection
+- Client/public venue browsing maps
+- Address-to-map and map-to-address geocoding
+- Booking request workflow
+- Booking date conflict enforcement
+- Quote creation and client quote decisions
+- Booking PDF upload/download workflow
+- Payment status records
+- Cancellation policies and refund calculation
+- Net collected revenue reporting
+- Docker Compose local environment
+- Initial domain, API controller, and database automated tests
+- Expand automated API, authorization, and SQL Server integration coverage (Still needed)
+- Replace current database image storage with production blob storage (Still needed)
 ## Demo accounts
 
 Development seed accounts may be available depending on the active database seed configuration. Never use development credentials in production.

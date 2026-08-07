@@ -289,10 +289,10 @@ let venues = [];
                     </td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary me-1" data-action="edit-venue" data-venue-id="${venue.id}">
-                            <i class="bi bi-pencil"></i>
+                            <i class="bi bi-pencil"></i> Edit
                         </button>
-                        <button class="btn btn-sm ${venue.isActive ? 'btn-outline-warning' : 'btn-outline-success'}" data-action="toggle-venue-status" data-venue-id="${venue.id}">
-                            <i class="bi ${venue.isActive ? 'bi-eye-slash' : 'bi-eye'}"></i>
+                        <button class="btn btn-sm ${venue.isActive ? 'btn-outline-orange' : 'btn-outline-success'}" data-action="toggle-venue-status" data-venue-id="${venue.id}">
+                            <i class="bi ${venue.isActive ? 'bi-eye-slash' : 'bi-eye'}"></i> ${venue.isActive ? 'Deactivate' : 'Activate'}
                         </button>
                     </td>
                 </tr>

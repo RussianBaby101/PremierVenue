@@ -1,4 +1,4 @@
-const CACHE_NAME = 'premiervenue-v2';
+const CACHE_NAME = 'premiervenue-v5';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -11,10 +11,13 @@ const urlsToCache = [
     '/assets/css/styles.css',
     '/assets/js/shared/main.js',
     '/assets/js/shared/api.js',
+    '/assets/images/PremierVenueFavicon.png',
+    '/assets/images/PremierVenueLogoNoBg.png',
     '/manifest.json'
 ];
 
 self.addEventListener('install', event => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => cache.addAll(urlsToCache))
@@ -28,12 +31,13 @@ self.addEventListener('fetch', event => {
                 if (response) {
                     return response;
                 }
-                return fetch(event.request);
+                return fetch(event.request).catch(() => caches.match('/index.html'));
             })
     );
 });
 
 self.addEventListener('activate', event => {
+    event.waitUntil(self.clients.claim());
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
