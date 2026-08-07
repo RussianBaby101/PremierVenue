@@ -48,7 +48,7 @@
         return `
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top public-navbar">
                 <div class="container">
-                    <a class="navbar-brand" href="/index.html">Premier Venue</a>
+                    <a class="navbar-brand" href="/index.html"><img src="/assets/images/PremierVenueLogoNoBg.png" alt="" class="brand-logo"> <span>Premier Venue</span></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -72,7 +72,6 @@
         return `
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top app-navbar">
                 <div class="container">
-                    
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                         <span class="navbar-toggler-icon"></span>
                     </button>
