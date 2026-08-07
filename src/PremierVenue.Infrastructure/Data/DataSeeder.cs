@@ -50,8 +50,8 @@ public static class DataSeeder
                 Longitude = 18.4241m,
                 Capacity = 220,
                 BasePricePerDay = 18000,
-                ImageUrl = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop",
-                ThumbnailUrl = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=200&h=150&fit=crop",
+                ImageUrl = "https://images.unsplash.com/photo-1721677337543-37b07e7e28b5?fm=jpg&q=80&w=1200&auto=format&fit=crop",
+                ThumbnailUrl = "https://images.unsplash.com/photo-1721677337543-37b07e7e28b5?fm=jpg&q=80&w=400&auto=format&fit=crop",
                 IsActive = true,
                 SupportedServices = new List<string> { "Catering", "Staffing & security", "Setup & cleanup", "AV technician" },
                 EventTypes = new List<VenueEventType>
@@ -68,9 +68,9 @@ public static class DataSeeder
                 },
                 Photos = new List<VenuePhoto>
                 {
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop", Caption = "Main Hall", DisplayOrder = 1, IsPrimary = true },
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop", Caption = "Outdoor Terrace", DisplayOrder = 2, IsPrimary = false },
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1429497419839-1c6946e6c5f9?w=800&h=600&fit=crop", Caption = "Reception Area", DisplayOrder = 3, IsPrimary = false }
+                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1721677337543-37b07e7e28b5?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Main Hall", DisplayOrder = 1, IsPrimary = true },
+                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Outdoor Terrace", DisplayOrder = 2, IsPrimary = false },
+                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=800&h=600&fit=crop", Caption = "Reception Area", DisplayOrder = 3, IsPrimary = false }
                 }
             },
             new Venue
@@ -85,8 +85,8 @@ public static class DataSeeder
                 Longitude = 28.0556m,
                 Capacity = 400,
                 BasePricePerDay = 32000,
-                ImageUrl = "https://images.unsplash.com/photo-1478146059778-26a4c107e3ae?w=800&h=600&fit=crop",
-                ThumbnailUrl = "https://images.unsplash.com/photo-1478146059778-26a4c107e3ae?w=200&h=150&fit=crop",
+                ImageUrl = "https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=1200&auto=format&fit=crop",
+                ThumbnailUrl = "https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=400&auto=format&fit=crop",
                 IsActive = true,
                 SupportedServices = new List<string> { "Catering", "Staffing & security", "Setup & cleanup", "AV technician" },
                 EventTypes = new List<VenueEventType>
@@ -105,8 +105,8 @@ public static class DataSeeder
                 },
                 Photos = new List<VenuePhoto>
                 {
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1478146059778-26a4c107e3ae?w=800&h=600&fit=crop", Caption = "Conference Room", DisplayOrder = 1, IsPrimary = true },
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&h=600&fit=crop", Caption = "Lobby Area", DisplayOrder = 2, IsPrimary = false }
+                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Conference Room", DisplayOrder = 1, IsPrimary = true },
+                    new VenuePhoto { Url = "https://plus.unsplash.com/premium_photo-1661775249446-c56b418d009e?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Lobby Area", DisplayOrder = 2, IsPrimary = false }
                 }
             },
             new Venue
@@ -121,8 +121,8 @@ public static class DataSeeder
                 Longitude = 31.0184m,
                 Capacity = 140,
                 BasePricePerDay = 12500,
-                ImageUrl = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop",
-                ThumbnailUrl = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=200&h=150&fit=crop",
+                ImageUrl = "https://plus.unsplash.com/premium_photo-1661775249446-c56b418d009e?fm=jpg&q=80&w=1200&auto=format&fit=crop",
+                ThumbnailUrl = "https://plus.unsplash.com/premium_photo-1661775249446-c56b418d009e?fm=jpg&q=80&w=400&auto=format&fit=crop",
                 IsActive = true,
                 SupportedServices = new List<string> { "Catering", "Staffing & security", "Setup & cleanup", "Decor planning" },
                 EventTypes = new List<VenueEventType>
@@ -140,8 +140,8 @@ public static class DataSeeder
                 },
                 Photos = new List<VenuePhoto>
                 {
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop", Caption = "Garden View", DisplayOrder = 1, IsPrimary = true },
-                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1429497419839-1c6946e6c5f9?w=800&h=600&fit=crop", Caption = "Ceremony Area", DisplayOrder = 2, IsPrimary = false }
+                    new VenuePhoto { Url = "https://plus.unsplash.com/premium_photo-1661775249446-c56b418d009e?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Garden View", DisplayOrder = 1, IsPrimary = true },
+                    new VenuePhoto { Url = "https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=1200&auto=format&fit=crop", Caption = "Ceremony Area", DisplayOrder = 2, IsPrimary = false }
                 }
             }
         };

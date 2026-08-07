@@ -114,7 +114,13 @@
     function createVenueCard(venue, mode, isFeatured = false) {
         const featured = isFeatured || venue.isFeatured;
         const imagePath = resolveVenueImage(venue.thumbnailUrl || venue.imageUrl || venue.photos?.find(p => p.isPrimary)?.url || venue.photos?.[0]?.url);
-        const fallbackImagePath = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop';
+        const fallbackImagePaths = [
+            'https://images.unsplash.com/photo-1721677337543-37b07e7e28b5?fm=jpg&q=80&w=1200&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1680642915019-fdf790dce634?fm=jpg&q=80&w=1200&auto=format&fit=crop',
+            'https://plus.unsplash.com/premium_photo-1661775249446-c56b418d009e?fm=jpg&q=80&w=1200&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1687213280116-234f93b15b44?fm=jpg&q=80&w=1200&auto=format&fit=crop'
+        ];
+        const fallbackImagePath = fallbackImagePaths[(Number(venue.id) || 0) % fallbackImagePaths.length];
         const detailsUrl = `venue-details.html?id=${venue.id}`;
 
         return `
