@@ -274,7 +274,7 @@ let venues = [];
                             </div>
                             <div>
                                 <strong>${venue.name}</strong>
-                                ${venue.isFeatured ? '<span class="badge bg-warning text-dark ms-2"><i class="bi bi-star-fill"></i> Featured</span>' : ''}
+                                ${venue.isFeatured ? '<span class="badge bg-primary ms-2"><i class="bi bi-star-fill"></i> Featured</span>' : ''}
                                 <div class="text-muted small">${venue.description ? venue.description.substring(0, 50) + '...' : ''}</div>
                             </div>
                         </div>

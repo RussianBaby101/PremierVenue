@@ -206,8 +206,8 @@ main:not(.hero-section) > h1::after, body > .container > h1::after, .staff-page-
 
 .venue-card { background: var(--surface-color); }
 .venue-card:hover { box-shadow: 0 18px 40px rgba(23, 105, 224, 0.16); }
-.venue-image-link { display: block; overflow: hidden; border-radius: 1.1rem 1.1rem 0 0; }
-.venue-image-link img { transition: transform 0.25s ease; }
+.venue-image-link { display: block; height: 185px; overflow: hidden; border-radius: 1.1rem 1.1rem 0 0; }
+.venue-image-link img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.25s ease; }
 .venue-image-link:hover img { transform: scale(1.03); }
 .venue-card img { border-radius: 1.1rem 1.1rem 0 0; }
 .venue-amenities {
@@ -429,8 +429,8 @@ textarea.form-control { resize: vertical; }
 
 .venue-details-heading { padding: 0.75rem 0.25rem 0; }
 .venue-details-heading #venueInfo { font-size: 0.95rem; }
-.venue-slideshow .main-image-container { position: relative; height: 330px; border: 1px solid #dce8f8; border-radius: 0.75rem; background: linear-gradient(135deg, #f6faff, #e9f2ff); }
-.venue-slideshow .main-image { border-radius: 0.7rem; }
+.venue-slideshow .main-image-container { position: relative; height: 330px; overflow: hidden; border: 1px solid #dce8f8; border-radius: 0.75rem; background: linear-gradient(135deg, #f6faff, #e9f2ff); }
+.venue-slideshow .main-image { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0.7rem; }
 .gallery-badge { position: absolute; top: 0.85rem; left: 0.85rem; z-index: 1; padding: 0.4rem 0.7rem; color: #fff; background: rgba(16, 42, 86, 0.82); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; backdrop-filter: blur(8px); }
 .gallery-badge i { margin-right: 0.25rem; color: #8fc0ff; }
 .venue-slideshow .thumbnail-container { padding: 0.35rem 0.2rem 0.15rem; }
@@ -593,15 +593,16 @@ footer, footer.bg-dark { background: var(--secondary-color) !important; position
 }
 
 .request-panel { position: sticky; top: 5.75rem; align-self: flex-start; }
-.featured-venues-panel { padding: 1.25rem; border: 1px solid #f4c44e; border-radius: 1rem; background: linear-gradient(135deg, rgba(255, 250, 230, 0.95), rgba(255, 255, 255, 0.78)); box-shadow: 0 18px 42px rgba(180, 125, 12, 0.12); }
+.featured-venues-panel { padding: 0; background: transparent; }
 .featured-venues-panel h2 { color: var(--ink-color); font-size: 1.35rem; font-weight: 800; }
-.featured-venue-card { border-color: #f4c44e; box-shadow: 0 14px 34px rgba(180, 125, 12, 0.16); }
-.featured-venue-card:hover { box-shadow: 0 20px 44px rgba(180, 125, 12, 0.24); transform: translateY(-3px); }
-.featured-venue-badge { position: absolute; top: 0.85rem; left: 0.85rem; z-index: 1; padding: 0.4rem 0.7rem; border-radius: 999px; background: #ffc107; color: #4a3500; font-size: 0.78rem; font-weight: 800; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18); }
-.featured-venue-toggle { padding: 1rem 1.15rem; border: 2px solid #f4c44e; border-radius: 0.75rem; background: #fffaf0; }
+.featured-venue-badge { position: absolute; top: 0.85rem; left: 0.85rem; z-index: 1; padding: 0.4rem 0.7rem; border-radius: 999px; background: var(--primary-color); color: #fff; font-size: 0.78rem; font-weight: 800; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18); }
+.featured-venue-toggle { padding: 1rem 1.15rem; border: 2px solid var(--primary-color); border-radius: 0.75rem; background: var(--soft-blue); }
 .featured-venue-toggle .form-check-input { width: 2.5rem; height: 1.35rem; cursor: pointer; }
+.featured-venue-toggle .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
 .featured-venue-toggle .form-check-label { cursor: pointer; }
 .venue-discovery-toolbar .form-select { width: auto; min-width: 11rem; }
+.venue-discovery-toolbar .btn-group { gap: 0.35rem; }
+.venue-discovery-toolbar .btn-group > .btn { border-radius: 999px !important; }
 .venue-map { min-height: 32rem; overflow: hidden; border: 1px solid var(--border-color); border-radius: 1rem; box-shadow: 0 14px 36px rgba(35, 82, 145, 0.08); }
 .save-venue-btn { flex: 0 0 auto; border: 0; padding: 0.2rem; color: #6d85a4; background: transparent; font-size: 1.15rem; line-height: 1; }
 .save-venue-btn:hover, .save-venue-btn.saved { color: #e25570; }
