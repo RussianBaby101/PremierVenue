@@ -227,6 +227,12 @@ body > *, .public-navbar, .app-navbar, #venuesNavMount { position: relative; z-i
 .auth-progress span.complete { color: #2c9a65; }
 .auth-progress span.complete b { color: #fff; background: #2c9a65; font-size: 0; }
 .auth-progress span.complete b::after { content: '✓'; font-size: 0.68rem; }
+.auth-confirmation { padding: 1.25rem; border: 1px solid #cfe1f8; border-radius: 0.9rem; background: rgba(238, 247, 255, 0.82); text-align: center; }
+.auth-confirmation > i { display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; margin-bottom: 0.7rem; border-radius: 50%; color: #fff; background: #2c9a65; font-size: 1.35rem; }
+.auth-confirmation h2 { margin-bottom: 0.45rem; font-size: 1.15rem; }
+.auth-confirmation p { margin-bottom: 1rem; color: #6d85a4; font-size: 0.82rem; line-height: 1.6; }
+.auth-confirmation.auth-error { border-color: #f0c8ce; background: #fff7f8; }
+.auth-confirmation.auth-error > i { background: #c74450; }
 .profile-page { max-width: 980px; }
 .venue-details-page { max-width: 1140px; }
 .staff-management-page, .dashboard-page, .reports-page { max-width: 1180px; }

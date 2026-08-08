@@ -1,7 +1,16 @@
 ﻿// Reset password: sets a new password using the email from the query string.
 const params = new URLSearchParams(window.location.search);
         const emailInput = document.getElementById('email');
+        const resetForm = document.getElementById('resetPasswordForm');
+        const resetLinkError = document.getElementById('resetLinkError');
+        const resetToken = params.get('token') || '';
         emailInput.value = params.get('email') || '';
+
+        if (resetToken) {
+            resetForm?.classList.remove('d-none');
+        } else {
+            resetLinkError?.classList.remove('d-none');
+        }
 
         const passwordInput = document.getElementById('password');
         const confirmInput = document.getElementById('confirmPassword');
@@ -68,6 +77,7 @@ const params = new URLSearchParams(window.location.search);
             try {
                 await AuthApi.resetPassword({
                     email: emailInput.value.trim(),
+                    token: resetToken,
                     otp: document.getElementById('otp').value.trim(),
                     password
                 });
