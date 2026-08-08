@@ -28,6 +28,9 @@ The system is built with an ASP.NET Core 8 Web API, Entity Framework Core, SQL S
 - JWT access-token authentication.
 - Role-based authorization for `Client`, `Staff`, and `Admin` users.
 - Password reset request and password reset flows.
+- Email-driven OTP password recovery with single-use, expiring reset tokens.
+- Forgot-password confirmation state that keeps users on the request page until they open the email link.
+- Direct reset-page access protection for missing or incomplete reset links.
 - Staff invitation acceptance flow.
 - Central profile management for authenticated users.
 - Staff and admin user administration.
@@ -326,6 +329,8 @@ The staff reporting dashboard includes a six-month revenue chart with a month-by
 - SweetAlert2 for confirmation and feedback dialogs.
 - Responsive, mobile-first page layouts.
 - PWA manifest and service worker support.
+- Single-column authentication pages with branded gradient backgrounds, decorative icons, and responsive form cards.
+- Password recovery progress indicators and check-email confirmation states.
 - Nginx container for frontend serving.
 
 ## Mobile functionality
@@ -504,6 +509,8 @@ PremierVenue/
 - JWT authentication for protected API operations.
 - Role-based authorization for client, staff, and admin capabilities.
 - Password hashing through the authentication implementation.
+- Password reset tokens and OTP values are stored as hashes and expire after a short reset window.
+- Reset tokens are invalidated after successful use and reset requests return generic account-safe responses.
 - FluentValidation for request validation.
 - EF Core parameterized data access.
 - CORS configuration.
@@ -517,6 +524,8 @@ PremierVenue/
 - EF Core and SQL Server persistence
 - JWT authentication and role authorization
 - Client registration, login, password reset, and invitations
+- Secure email-link OTP password reset flow
+- Client authentication page visual enhancements and recovery progress states
 - Client and staff profile persistence
 - Public venue discovery and search
 - Saved venues

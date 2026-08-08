@@ -1,10 +1,31 @@
 ﻿// Reset password: sets a new password using the email from the query string.
 const params = new URLSearchParams(window.location.search);
         const emailInput = document.getElementById('email');
+        const resetForm = document.getElementById('resetPasswordForm');
+        const resetLinkError = document.getElementById('resetLinkError');
+        const resetToken = params.get('token') || '';
         emailInput.value = params.get('email') || '';
+
+        if (resetToken) {
+            resetForm?.classList.remove('d-none');
+        } else {
+            resetLinkError?.classList.remove('d-none');
+        }
 
         const passwordInput = document.getElementById('password');
         const confirmInput = document.getElementById('confirmPassword');
+        const otpInput = document.getElementById('otp');
+        const progressSteps = [...document.querySelectorAll('.auth-progress span')];
+
+        function updateProgress() {
+            const passwordComplete = passwordInput.value.length >= 8 && /[A-Z]/.test(passwordInput.value) && /[a-z]/.test(passwordInput.value) && /[0-9]/.test(passwordInput.value) && passwordInput.value === confirmInput.value;
+            const currentStep = passwordComplete ? 3 : 2;
+            progressSteps.forEach(step => {
+                const stepNumber = Number(step.querySelector('b')?.textContent || 0);
+                step.classList.toggle('active', stepNumber === currentStep);
+                step.classList.toggle('complete', stepNumber < currentStep);
+            });
+        }
 
         function updateRequirement(rule, valid) {
             const item = document.querySelector(`[data-rule="${rule}"]`);
@@ -27,8 +48,16 @@ const params = new URLSearchParams(window.location.search);
             matchMessage.className = `small mt-1 ${matches ? 'text-success' : 'text-danger'}`;
         }
 
-        passwordInput.addEventListener('input', updatePasswordRequirements);
-        confirmInput.addEventListener('input', updatePasswordRequirements);
+        passwordInput.addEventListener('input', () => {
+            updatePasswordRequirements();
+            updateProgress();
+        });
+        confirmInput.addEventListener('input', () => {
+            updatePasswordRequirements();
+            updateProgress();
+        });
+        otpInput.addEventListener('input', updateProgress);
+        updateProgress();
 
         document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -48,6 +77,7 @@ const params = new URLSearchParams(window.location.search);
             try {
                 await AuthApi.resetPassword({
                     email: emailInput.value.trim(),
+                    token: resetToken,
                     otp: document.getElementById('otp').value.trim(),
                     password
                 });

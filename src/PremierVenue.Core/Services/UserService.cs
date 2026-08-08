@@ -63,18 +63,19 @@ public class UserService : IUserService
     {
         var user = await _userRepository.GetByEmailAsync(model.Email.Trim());
         if (user == null || !user.IsActive)
-            throw new UnauthorizedAccessException("Incorrect email or password");
+            return;
 
         var otp = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
+        var resetToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
         var now = DateTime.UtcNow;
-        user.InvitationToken = $"password-reset:{HashResetCode(otp)}";
+        user.InvitationToken = $"password-reset:{HashResetCode(resetToken)}:{HashResetCode(otp)}";
         user.InvitationSentAt = now;
         user.InvitationExpiresAt = now.AddMinutes(10);
         _userRepository.Update(user);
         await _unitOfWork.SaveChangesAsync();
 
         var baseUrl = _configuration["App:FrontendBaseUrl"]?.TrimEnd('/') ?? "https://localhost:5002";
-        var resetLink = $"{baseUrl}/pages/reset-password.html?email={Uri.EscapeDataString(user.Email)}";
+        var resetLink = $"{baseUrl}/pages/public/reset-password.html?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(resetToken)}";
 
         await _emailService.SendEmailAsync(
             user.Email,
@@ -91,17 +92,25 @@ public class UserService : IUserService
         var user = await _userRepository.GetByEmailAsync(model.Email.Trim());
         var expectedPrefix = "password-reset:";
         var storedToken = user?.InvitationToken;
-        var storedHash = storedToken?.StartsWith(expectedPrefix, StringComparison.Ordinal) == true
-            ? storedToken[expectedPrefix.Length..]
-            : null;
+        var storedParts = storedToken?.StartsWith(expectedPrefix, StringComparison.Ordinal) == true
+            ? storedToken[expectedPrefix.Length..].Split(':', 2)
+            : Array.Empty<string>();
+        var storedTokenHash = storedParts.Length == 2 ? storedParts[0] : null;
+        var storedOtpHash = storedParts.Length == 2 ? storedParts[1] : null;
+        var suppliedTokenHash = HashResetCode(model.Token.Trim());
+        var suppliedOtpHash = HashResetCode(model.Otp.Trim());
 
         if (user == null || !user.IsActive || user.InvitationExpiresAt <= DateTime.UtcNow ||
-            string.IsNullOrWhiteSpace(storedHash) ||
+            string.IsNullOrWhiteSpace(model.Token) || string.IsNullOrWhiteSpace(storedTokenHash) ||
+            string.IsNullOrWhiteSpace(storedOtpHash) ||
             !CryptographicOperations.FixedTimeEquals(
-                Convert.FromHexString(storedHash),
-                SHA256.HashData(Encoding.UTF8.GetBytes(model.Otp.Trim()))))
+                Encoding.UTF8.GetBytes(storedTokenHash),
+                Encoding.UTF8.GetBytes(suppliedTokenHash)) ||
+            !CryptographicOperations.FixedTimeEquals(
+                Encoding.UTF8.GetBytes(storedOtpHash),
+                Encoding.UTF8.GetBytes(suppliedOtpHash)))
         {
-            throw new InvalidOperationException("The email or OTP is invalid or has expired.");
+            throw new InvalidOperationException("The reset link or code is invalid or has expired.");
         }
 
         user.PasswordHash = PasswordHasher.HashPassword(model.Password);
