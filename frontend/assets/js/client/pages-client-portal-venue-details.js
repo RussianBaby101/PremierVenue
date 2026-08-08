@@ -9,63 +9,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             initVenueCalendar();
         });
 
-        // Venue Slideshow
-        function initVenueSlideshow() {
-            // Placeholder images - will be replaced with actual venue images from API
-            const uploadedImages = (window.currentVenue?.photos || []).map(photo => window.resolveVenueImage(photo.url)).filter(Boolean);
-            const venueImages = uploadedImages.length ? uploadedImages : [
-                window.resolveVenueImage(window.currentVenue?.imageUrl),
-                'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop',
-                'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop'
-            ].filter(Boolean);
-
-            let currentImageIndex = 0;
-            const mainImage = document.getElementById('mainImage');
-            const thumbnailContainer = document.querySelector('.thumbnail-container');
-
-            // Set initial main image
-            if (mainImage && venueImages.length > 0) {
-                mainImage.src = venueImages[0];
-            }
-
-            // Create thumbnails
-            if (thumbnailContainer) {
-                venueImages.forEach((imageSrc, index) => {
-                    const thumbnail = document.createElement('img');
-                    thumbnail.src = imageSrc;
-                    thumbnail.alt = `Venue image ${index + 1}`;
-                    thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
-                    thumbnail.addEventListener('click', () => {
-                        setCurrentImage(index);
-                    });
-                    thumbnailContainer.appendChild(thumbnail);
-                });
-            }
-
-            // Set current image
-            function setCurrentImage(index) {
-                currentImageIndex = index;
-                if (mainImage) {
-                    mainImage.style.opacity = '0';
-                    setTimeout(() => {
-                        mainImage.src = venueImages[index];
-                        mainImage.style.opacity = '1';
-                    }, 300);
-                }
-
-                // Update thumbnail active states
-                const thumbnails = thumbnailContainer.querySelectorAll('.thumbnail');
-                thumbnails.forEach((thumb, i) => {
-                    thumb.classList.toggle('active', i === index);
-                });
-            }
-
-            // Auto-rotate images every 5 seconds
-            setInterval(() => {
-                const nextIndex = (currentImageIndex + 1) % venueImages.length;
-                setCurrentImage(nextIndex);
-            }, 5000);
-        }
+        const initVenueSlideshow = window.initVenueSlideshow;
 
         // Venue Calendar
         function initVenueCalendar() {
@@ -76,7 +20,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             const endDateValueInput = document.getElementById('selectedEndDateValue');
             const requestForm = document.getElementById('venueRequestForm');
             const requestStatus = document.getElementById('requestStatus');
+            const clearDatesButton = document.getElementById('clearDatesButton');
+            const summaryDates = document.getElementById('summaryDates');
+            const summaryGuests = document.getElementById('summaryGuests');
+            const expectedGuestsInput = document.getElementById('expectedGuests');
+            const eventTypeInput = document.getElementById('eventType');
+            const summaryVenue = document.getElementById('summaryVenue');
+            const bookingSteps = [...document.querySelectorAll('.booking-step')];
             if (!calendarContainer) return;
+            if (summaryVenue) summaryVenue.textContent = window.currentVenue?.name || 'Selected venue';
 
             let currentDate = new Date();
             let currentMonth = currentDate.getMonth();
@@ -139,6 +91,18 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             }
 
+            function updateBookingSteps() {
+                const hasDates = Boolean(startDate && endDate);
+                const hasDetails = Boolean(eventTypeInput?.value && Number(expectedGuestsInput?.value) > 0);
+                const currentStep = hasDetails ? 3 : hasDates ? 2 : 1;
+
+                bookingSteps.forEach(step => {
+                    const stepNumber = Number(step.dataset.step);
+                    step.classList.toggle('active', stepNumber === currentStep);
+                    step.classList.toggle('complete', stepNumber < currentStep);
+                });
+            }
+
             function updateDateInputs() {
                 if (startDateInput) {
                     startDateInput.value = startDate ? formatDate(startDate) : '';
@@ -152,6 +116,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (endDateValueInput) {
                     endDateValueInput.value = endDate ? formatDateValue(endDate) : '';
                 }
+                if (summaryDates) {
+                    summaryDates.textContent = startDate && endDate
+                        ? `${formatDate(startDate)} – ${formatDate(endDate)}`
+                        : startDate ? `${formatDate(startDate)} – Choose end date` : 'Select dates above';
+                }
+                updateBookingSteps();
             }
 
             function handleDateClick(date) {
@@ -184,6 +154,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             clearDates();
+            clearDatesButton?.addEventListener('click', () => {
+                clearDates();
+                renderCalendar(currentMonth, currentYear);
+            });
+            expectedGuestsInput?.addEventListener('input', () => {
+                if (summaryGuests) summaryGuests.textContent = expectedGuestsInput.value ? `${expectedGuestsInput.value} guests` : 'Add guest count';
+                updateBookingSteps();
+            });
+            eventTypeInput?.addEventListener('change', updateBookingSteps);
             renderServiceOptions();
 
             function renderCalendar(month, year) {

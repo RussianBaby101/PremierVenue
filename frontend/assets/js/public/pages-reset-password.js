@@ -5,6 +5,18 @@ const params = new URLSearchParams(window.location.search);
 
         const passwordInput = document.getElementById('password');
         const confirmInput = document.getElementById('confirmPassword');
+        const otpInput = document.getElementById('otp');
+        const progressSteps = [...document.querySelectorAll('.auth-progress span')];
+
+        function updateProgress() {
+            const passwordComplete = passwordInput.value.length >= 8 && /[A-Z]/.test(passwordInput.value) && /[a-z]/.test(passwordInput.value) && /[0-9]/.test(passwordInput.value) && passwordInput.value === confirmInput.value;
+            const currentStep = passwordComplete ? 3 : 2;
+            progressSteps.forEach(step => {
+                const stepNumber = Number(step.querySelector('b')?.textContent || 0);
+                step.classList.toggle('active', stepNumber === currentStep);
+                step.classList.toggle('complete', stepNumber < currentStep);
+            });
+        }
 
         function updateRequirement(rule, valid) {
             const item = document.querySelector(`[data-rule="${rule}"]`);
@@ -27,8 +39,16 @@ const params = new URLSearchParams(window.location.search);
             matchMessage.className = `small mt-1 ${matches ? 'text-success' : 'text-danger'}`;
         }
 
-        passwordInput.addEventListener('input', updatePasswordRequirements);
-        confirmInput.addEventListener('input', updatePasswordRequirements);
+        passwordInput.addEventListener('input', () => {
+            updatePasswordRequirements();
+            updateProgress();
+        });
+        confirmInput.addEventListener('input', () => {
+            updatePasswordRequirements();
+            updateProgress();
+        });
+        otpInput.addEventListener('input', updateProgress);
+        updateProgress();
 
         document.getElementById('resetPasswordForm').addEventListener('submit', async function (event) {
             event.preventDefault();

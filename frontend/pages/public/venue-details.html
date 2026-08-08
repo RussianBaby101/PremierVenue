@@ -10,31 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .more-info-locked {
-            filter: blur(8px);
-            user-select: none;
-            pointer-events: none;
-        }
-        .login-prompt-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.7);
-            z-index: 10;
-            border-radius: 0.5rem;
-        }
-        .login-prompt-box {
-            text-align: center;
-            padding: 2rem;
-            background: #fff;
-            border: 1px solid #dce8f8;
-            border-radius: 1rem;
-            box-shadow: 0 8px 24px rgba(16, 42, 86, 0.12);
-        }
-    </style>
     <link rel="icon" type="image/png" href="../../assets/images/PremierVenueFavicon.png">
 </head>
 
@@ -43,15 +18,16 @@
 
     <main class="container venue-details-page py-5 mt-5">
         <div class="venue-details-heading mb-4">
-            <p class="section-eyebrow mb-2">Your next event starts here</p>
-            <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+            <a href="venues.html" class="detail-back-link"><i class="bi bi-arrow-left"></i> Back to venues</a>
+            <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mt-3">
                 <div>
+                    <p class="section-eyebrow mb-2">Your next event starts here</p>
                     <h1 id="venueName">Venue Details</h1>
-                    <p id="venueInfo" class="text-muted mb-0">Loading...</p>
+                    <p class="venue-heading-location mb-0"><i class="bi bi-geo-alt"></i> <span id="venueHeadingLocation">-</span></p>
                 </div>
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-outline-primary save-detail-btn" id="saveVenueButton" data-action="toggle-saved-detail"><i class="bi bi-heart"></i> Save</button>
-                    <button type="button" class="btn btn-outline-primary" data-action="share-venue"><i class="bi bi-share"></i> Share</button>
+                <div class="detail-actions d-flex gap-2">
+                    <button type="button" class="btn btn-outline-primary save-detail-btn" id="saveVenueButton" data-action="toggle-saved-detail"><i class="bi bi-heart"></i><span> Save</span></button>
+                    <button type="button" class="btn btn-outline-primary" data-action="share-venue"><i class="bi bi-share"></i><span> Share</span></button>
                 </div>
             </div>
         </div>
@@ -62,8 +38,10 @@
                     <div class="card-body">
                         <div id="venueSlideshow" class="venue-slideshow">
                             <div class="main-image-container">
-                                <span class="gallery-badge"><i class="bi bi-images"></i> Venue gallery</span>
-                                <img id="mainImage" src="" alt="Venue Image" class="main-image img-fluid">
+                                <span class="gallery-badge"><i class="bi bi-images"></i> <span id="galleryCount">Venue gallery</span></span>
+                                <button type="button" class="gallery-control gallery-prev" aria-label="Previous venue image"><i class="bi bi-chevron-left"></i></button>
+                                <img id="mainImage" src="" alt="Venue Image" class="main-image img-fluid" tabindex="0">
+                                <button type="button" class="gallery-control gallery-next" aria-label="Next venue image"><i class="bi bi-chevron-right"></i></button>
                             </div>
                             <div class="thumbnail-container d-flex gap-2 mt-3 overflow-auto">
                                 <!-- Thumbnails will be dynamically generated -->
@@ -84,46 +62,50 @@
                                 <div class="venue-fact"><i class="bi bi-people"></i><span><small>Capacity</small><strong id="venueCapacity">-</strong></span></div>
                                 <div class="venue-fact"><i class="bi bi-tag"></i><span><small>From</small><strong id="venuePrice">-</strong></span></div>
                             </div>
-                            <div id="venueEventTypes" class="venue-amenities mb-2"></div>
-                            <div id="venueAmenities" class="venue-amenities mb-3"></div>
-                            <p id="venueDescription" class="text-muted overview-note"><i class="bi bi-shield-check"></i> A beautiful, flexible setting for your most important moments.</p>
+                            <div class="detail-section">
+                                <p class="detail-label">Suitable for</p>
+                                <div id="venueEventTypes" class="venue-amenities"></div>
+                            </div>
+                            <div class="detail-section">
+                                <p class="detail-label">Amenities</p>
+                                <div id="venueAmenities" class="venue-amenities"></div>
+                            </div>
+                            <div class="detail-section about-preview">
+                                <p class="detail-label">About this venue</p>
+                                <p id="venueDescription" class="text-muted overview-note">A beautiful, flexible setting for your most important moments.</p>
+                            </div>
                         </div>
-                        <div>
-                            <a href="venues.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> Back to Venues</a>
+                        <div class="detail-card-actions">
+                            <a href="login.html" class="btn btn-primary"><i class="bi bi-calendar-check"></i> Sign in to request this venue</a>
+                            <p class="small text-muted mb-0 mt-2">Create an account to check availability and submit a booking request.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card mt-4">
+        <div class="card mt-4 location-card">
             <div class="card-body">
-                <p class="card-eyebrow">Find us</p>
-                <h2>Location</h2>
-                <div id="venueDetailMap" class="venue-map"></div>
+                <div class="section-heading-row">
+                    <div>
+                        <p class="card-eyebrow">Find us</p>
+                        <h2>Location</h2>
+                        <p id="venueAddress" class="text-muted mb-0"><i class="bi bi-geo-alt"></i> Address unavailable</p>
+                    </div>
+                    <a id="venueMapLink" href="#" class="btn btn-outline-primary" target="_blank" rel="noopener"><i class="bi bi-map"></i> Open in Maps</a>
+                </div>
+                <div id="venueDetailMap" class="venue-map mt-3"></div>
             </div>
         </div>
 
-        <div class="card mt-4 position-relative" id="venueMoreInfo">
-            <div class="card-body more-info-locked" id="venueMoreInfoContent">
-                <p class="card-eyebrow">More information</p>
-                <h2>Detailed venue information</h2>
-                <p>Explore full venue specifications, available packages, real-time availability, contact details, and special offers.</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><i class="bi bi-calendar-check text-primary"></i> Live availability calendar</li>
-                    <li class="list-group-item"><i class="bi bi-box-seam text-primary"></i> Customisable event packages</li>
-                    <li class="list-group-item"><i class="bi bi-envelope text-primary"></i> Direct contact with the venue</li>
-                    <li class="list-group-item"><i class="bi bi-tag text-primary"></i> Exclusive member pricing</li>
-                </ul>
-            </div>
-            <div class="login-prompt-overlay" id="venueLoginPrompt">
-                <div class="login-prompt-box">
-                    <i class="bi bi-lock-fill text-primary fs-1 mb-3"></i>
-                    <h3>Log in to see more</h3>
-                    <p class="text-muted mb-3">Sign in to unlock detailed venue information and start planning your event.</p>
-                    <a href="login.html" class="btn btn-primary">Log in</a>
-                    <a href="register.html" class="btn btn-outline-primary ms-2">Register</a>
-                </div>
+        <div class="auth-callout mt-4" id="venueMoreInfo">
+            <div class="auth-callout-icon"><i class="bi bi-calendar-check"></i></div>
+            <div>
+                <p class="card-eyebrow">Plan your event</p>
+                <h2>Ready to make this venue yours?</h2>
+                <p class="text-muted mb-3">Create an account to check live availability, save this venue, submit a booking request, and receive a quote.</p>
+                <a href="login.html" class="btn btn-primary">Log in to continue</a>
+                <a href="register.html" class="btn btn-outline-primary ms-2">Create account</a>
             </div>
         </div>
     </main>

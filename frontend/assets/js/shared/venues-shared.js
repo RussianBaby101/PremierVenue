@@ -471,6 +471,63 @@
         loadVenues(currentPage, {});
     }
 
+    window.initVenueSlideshow = function initVenueSlideshow() {
+        const uploadedImages = (window.currentVenue?.photos || []).map(photo => window.resolveVenueImage(photo.url)).filter(Boolean);
+        const venueImages = uploadedImages.length ? uploadedImages : [
+            window.resolveVenueImage(window.currentVenue?.imageUrl),
+            'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&h=600&fit=crop'
+        ].filter(Boolean);
+        const mainImage = document.getElementById('mainImage');
+        const thumbnailContainer = document.querySelector('.thumbnail-container');
+        const galleryCount = document.getElementById('galleryCount');
+        const previousButton = document.querySelector('.gallery-prev');
+        const nextButton = document.querySelector('.gallery-next');
+        if (!mainImage || !venueImages.length) return;
+
+        let currentImageIndex = 0;
+        let touchStartX = 0;
+
+        function setCurrentImage(index) {
+            currentImageIndex = (index + venueImages.length) % venueImages.length;
+            mainImage.src = venueImages[currentImageIndex];
+            mainImage.alt = `${window.currentVenue?.name || 'Venue'} image ${currentImageIndex + 1}`;
+            galleryCount && (galleryCount.textContent = `${venueImages.length} photos`);
+            thumbnailContainer?.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === currentImageIndex);
+            });
+        }
+
+        venueImages.forEach((imageSrc, index) => {
+            const thumbnail = document.createElement('img');
+            thumbnail.src = imageSrc;
+            thumbnail.alt = `View venue image ${index + 1}`;
+            thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
+            thumbnail.tabIndex = 0;
+            thumbnail.addEventListener('click', () => setCurrentImage(index));
+            thumbnail.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setCurrentImage(index);
+                }
+            });
+            thumbnailContainer?.appendChild(thumbnail);
+        });
+
+        previousButton?.addEventListener('click', () => setCurrentImage(currentImageIndex - 1));
+        nextButton?.addEventListener('click', () => setCurrentImage(currentImageIndex + 1));
+        mainImage.addEventListener('keydown', event => {
+            if (event.key === 'ArrowLeft') setCurrentImage(currentImageIndex - 1);
+            if (event.key === 'ArrowRight') setCurrentImage(currentImageIndex + 1);
+        });
+        mainImage.addEventListener('touchstart', event => { touchStartX = event.changedTouches[0].screenX; }, { passive: true });
+        mainImage.addEventListener('touchend', event => {
+            const distance = event.changedTouches[0].screenX - touchStartX;
+            if (Math.abs(distance) > 40) setCurrentImage(currentImageIndex + (distance < 0 ? 1 : -1));
+        }, { passive: true });
+        setCurrentImage(0);
+    };
+
     // Loads and renders a single venue's detail page
     async function renderVenueDetails(mode) {
         if (mode === 'portal' && typeof requireAuth === 'function' && !requireAuth()) {
@@ -485,6 +542,9 @@
         const venueCapacity = document.getElementById('venueCapacity');
         const venuePrice = document.getElementById('venuePrice');
         const venueLocation = document.getElementById('venueLocation');
+        const venueHeadingLocation = document.getElementById('venueHeadingLocation');
+        const venueAddress = document.getElementById('venueAddress');
+        const venueMapLink = document.getElementById('venueMapLink');
         const requestBudget = document.getElementById('requestBudget');
         const venueIdInput = document.getElementById('venueId');
 
@@ -518,8 +578,7 @@
         }
         const descriptionElement = document.getElementById('venueDescription');
         if (descriptionElement) {
-            const text = venue.description || 'A beautiful, flexible setting for your most important moments.';
-            descriptionElement.innerHTML = `<i class="bi bi-shield-check"></i> ${String(text).replace(/</g, '&lt;').replace(/>/g, '&gt;')}`;
+            descriptionElement.textContent = venue.description || 'A beautiful, flexible setting for your most important moments.';
         }
         const detailMap = document.getElementById('venueDetailMap');
         if (detailMap && typeof L !== 'undefined' && Number(venue.latitude) && Number(venue.longitude)) {
@@ -536,19 +595,27 @@
         if (venueName) {
             venueName.textContent = venue.name;
         }
-        if (venueInfo) {
-            venueInfo.textContent = id
-                ? `Viewing venue ID ${venue.id}. ${venue.id != id ? 'Venue not found; showing fallback venue.' : 'Venue details loaded.'}`
-                : 'No venue selected. Placeholder details shown.';
-        }
         if (venueCapacity) {
             venueCapacity.textContent = `${venue.capacity} guests`;
         }
         if (venuePrice) {
             venuePrice.textContent = `${formatCurrency(venue.basePricePerDay)} / day`;
         }
+        const locationText = [venue.city, venue.province].filter(Boolean).join(', ') || 'Location unavailable';
+        const addressText = [venue.address, venue.city, venue.province, venue.postalCode].filter(Boolean).join(', ') || locationText;
         if (venueLocation) {
-            venueLocation.textContent = `${venue.city}, ${venue.province}`;
+            venueLocation.textContent = locationText;
+        }
+        if (venueHeadingLocation) {
+            venueHeadingLocation.textContent = locationText;
+        }
+        if (venueAddress) {
+            venueAddress.innerHTML = `<i class="bi bi-geo-alt"></i> ${addressText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}`;
+        }
+        if (venueMapLink && Number(venue.latitude) && Number(venue.longitude)) {
+            venueMapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.latitude},${venue.longitude}`)}`;
+        } else if (venueMapLink) {
+            venueMapLink.classList.add('d-none');
         }
         if (requestBudget) {
             requestBudget.placeholder = String(venue.basePricePerDay);

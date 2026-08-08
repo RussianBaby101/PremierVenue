@@ -74,7 +74,7 @@ public class UserService : IUserService
         await _unitOfWork.SaveChangesAsync();
 
         var baseUrl = _configuration["App:FrontendBaseUrl"]?.TrimEnd('/') ?? "https://localhost:5002";
-        var resetLink = $"{baseUrl}/pages/reset-password.html?email={Uri.EscapeDataString(user.Email)}";
+        var resetLink = $"{baseUrl}/pages/public/reset-password.html?email={Uri.EscapeDataString(user.Email)}";
 
         await _emailService.SendEmailAsync(
             user.Email,
