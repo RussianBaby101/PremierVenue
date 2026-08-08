@@ -400,9 +400,9 @@ const mobileNavigation = {
             { label: 'Calendar', icon: 'bi-calendar3', href: '/pages/client/calendar.html', page: 'calendar.html' }
         ],
         more: [
-            { label: 'Saved Venues', icon: 'bi-heart', href: '/pages/client/saved-venues.html' },
-            { label: 'Profile', icon: 'bi-person', href: '/pages/client/profile.html' },
-            { label: 'Help & Contact', icon: 'bi-chat-dots', href: '/pages/public/contact-us.html' }
+            { label: 'Saved Venues', icon: 'bi-heart', href: '/pages/client/saved-venues.html', page: 'saved-venues.html' },
+            { label: 'Profile', icon: 'bi-person', href: '/pages/client/profile.html', page: 'profile.html' },
+            { label: 'Help & Contact', icon: 'bi-chat-dots', href: '/pages/public/contact-us.html', page: 'contact-us.html' }
         ]
     },
     staff: {
@@ -413,10 +413,10 @@ const mobileNavigation = {
             { label: 'Calendar', icon: 'bi-calendar3', href: '/pages/staff/calendar.html', page: 'calendar.html', adminOnly: true }
         ],
         more: [
-            { label: 'Clients', icon: 'bi-people', href: '/pages/staff/clients.html', adminOnly: true },
-            { label: 'Reports', icon: 'bi-bar-chart', href: '/pages/staff/reports.html', adminOnly: true },
-            { label: 'Users', icon: 'bi-person-badge', href: '/pages/staff/users.html', adminOnly: true },
-            { label: 'Profile', icon: 'bi-person', href: '/pages/staff/profile.html' }
+            { label: 'Clients', icon: 'bi-people', href: '/pages/staff/clients.html', page: 'clients.html', adminOnly: true },
+            { label: 'Reports', icon: 'bi-bar-chart', href: '/pages/staff/reports.html', page: 'reports.html', adminOnly: true },
+            { label: 'Users', icon: 'bi-person-badge', href: '/pages/staff/users.html', page: 'users.html', adminOnly: true },
+            { label: 'Profile', icon: 'bi-person', href: '/pages/staff/profile.html', page: 'profile.html' }
         ]
     }
 };
@@ -424,9 +424,8 @@ const mobileNavigation = {
 function mobileNavigationItem(item, isMore = false) {
     const currentPath = window.location.pathname.toLowerCase();
     const active = item.page && (currentPath.endsWith(item.page) || (item.page === 'venues.html' && currentPath.includes('/pages/client/venue')));
-    return isMore
-        ? `<button type="button" class="mobile-more-item" data-action="open-mobile-more"><i class="bi ${item.icon}"></i><span>${item.label}</span></button>`
-        : `<a class="mobile-nav-item${active ? ' active' : ''}" href="${item.href}"${active ? ' aria-current="page"' : ''}><i class="bi ${item.icon}"></i><span>${item.label}</span></a>`;
+    const className = isMore ? 'mobile-more-item' : 'mobile-nav-item';
+    return `<a class="${className}${active ? ' active' : ''}" href="${item.href}"${active ? ' aria-current="page"' : ''}><i class="bi ${item.icon}"></i><span>${item.label}</span></a>`;
 }
 
 function initMobileNavigation() {
@@ -454,7 +453,7 @@ function initMobileNavigation() {
         <div class="mobile-more-backdrop" data-action="close-mobile-more" aria-hidden="true">
             <section class="mobile-more-sheet" role="dialog" aria-modal="true" aria-labelledby="mobileMoreTitle">
                 <div class="mobile-more-header"><h2 id="mobileMoreTitle">More</h2><button type="button" class="mobile-more-close" data-action="close-mobile-more" aria-label="Close menu"><i class="bi bi-x-lg"></i></button></div>
-                <div class="mobile-more-grid">${moreItems.map(item => `<a class="mobile-more-item" href="${item.href}"><i class="bi ${item.icon}"></i><span>${item.label}</span></a>`).join('')}</div>
+                <div class="mobile-more-grid">${moreItems.map(item => mobileNavigationItem(item, true)).join('')}</div>
                 <button type="button" class="mobile-more-logout" data-action="logout"><i class="bi bi-box-arrow-right"></i> Log out</button>
             </section>
         </div>
