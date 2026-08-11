@@ -217,7 +217,7 @@ public class UserService : IUserService
         await _unitOfWork.SaveChangesAsync();
 
         var baseUrl = _configuration["App:FrontendBaseUrl"]?.TrimEnd('/') ?? "https://localhost:5002";
-        var link = $"{baseUrl}/pages/accept-invitation.html?token={token}";
+        var link = $"{baseUrl}/pages/public/accept-invitation.html?token={token}";
 
         try
         {

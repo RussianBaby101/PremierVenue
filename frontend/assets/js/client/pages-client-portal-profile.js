@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('lastName').value = user.lastName || '';
             document.getElementById('email').value = user.email || '';
             document.getElementById('phoneNumber').value = user.phoneNumber || '';
-            document.getElementById('role').value = user.role || 'Client';
-            document.getElementById('profileRoleSummary').textContent = user.role || 'Client';
             document.getElementById('profileEmailSummary').textContent = user.email || '-';
             document.getElementById('profilePhoneSummary').textContent = user.phoneNumber || '-';
 

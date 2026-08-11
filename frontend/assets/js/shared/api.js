@@ -1,6 +1,7 @@
 // Shared API client and endpoint helpers for Venue, Booking, Auth, User, SavedVenue, Payment, Document and Task APIs
 // API Configuration
 let _apiBaseUrl = 'https://localhost:5001/api';
+let _authRedirecting = false;
 
 try {
     if (typeof API_BASE_URL !== 'undefined') {
@@ -18,7 +19,36 @@ class ApiClient {
         return _apiBaseUrl;
     }
 
-    static async request(endpoint, options = {}) {
+    static clearSessionAndRedirect() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('user');
+        if (_authRedirecting) return;
+        _authRedirecting = true;
+        const returnUrl = `${window.location.pathname}${window.location.search}`;
+        window.location.href = `/pages/public/login.html?reason=session-expired&returnUrl=${encodeURIComponent(returnUrl)}`;
+    }
+
+    static async refreshAccessToken() {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) return false;
+
+        const response = await fetch(`${_apiBaseUrl}/auth/refresh`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken })
+        });
+        if (!response.ok) return false;
+
+        const result = await response.json();
+        if (!result.success || !result.data?.token) return false;
+        localStorage.setItem('token', result.data.token);
+        if (result.data.refreshToken) localStorage.setItem('refreshToken', result.data.refreshToken);
+        if (result.data.user) localStorage.setItem('user', JSON.stringify(result.data.user));
+        return true;
+    }
+
+    static async request(endpoint, options = {}, retryOnUnauthorized = true) {
         const url = `${_apiBaseUrl}${endpoint}`;
         const token = localStorage.getItem('token');
         
@@ -37,6 +67,21 @@ class ApiClient {
                 headers
             });
             
+            if (response.status === 401 && token && retryOnUnauthorized && !endpoint.startsWith('/auth/')) {
+                try {
+                    if (await ApiClient.refreshAccessToken()) {
+                        return ApiClient.request(endpoint, options, false);
+                    }
+                } catch (refreshError) {
+                    console.warn('Session refresh failed:', refreshError);
+                }
+                ApiClient.clearSessionAndRedirect();
+                const sessionError = new Error('Your session has expired. Please log in again.');
+                sessionError.status = 401;
+                sessionError.sessionExpired = true;
+                throw sessionError;
+            }
+
             if (!response.ok) {
                 const contentType = response.headers.get('content-type');
                 let errorMessage = `API request failed: ${response.status} ${response.statusText}`;
@@ -60,7 +105,7 @@ class ApiClient {
             if (response.status === 204) return null;
             return await response.json();
         } catch (error) {
-            console.error('API Error:', error);
+            if (!error.sessionExpired) console.error('API Error:', error);
             throw error;
         }
     }

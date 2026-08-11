@@ -401,8 +401,7 @@ const mobileNavigation = {
         ],
         more: [
             { label: 'Saved Venues', icon: 'bi-heart', href: '/pages/client/saved-venues.html', page: 'saved-venues.html' },
-            { label: 'Profile', icon: 'bi-person', href: '/pages/client/profile.html', page: 'profile.html' },
-            { label: 'Help & Contact', icon: 'bi-chat-dots', href: '/pages/public/contact-us.html', page: 'contact-us.html' }
+            { label: 'Profile', icon: 'bi-person', href: '/pages/client/profile.html', page: 'profile.html' }
         ]
     },
     staff: {

@@ -1,4 +1,9 @@
 ﻿// Public login: authenticates users and redirects to the appropriate staff or client dashboard.
+const loginParams = new URLSearchParams(window.location.search);
+if (loginParams.get('reason') === 'session-expired' && typeof SwalUtils !== 'undefined') {
+    SwalUtils.info('Session expired', 'Please log in again to continue.');
+}
+
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
